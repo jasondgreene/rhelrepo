@@ -2,7 +2,9 @@
 # Ugly script to create repos for RHEL7
 # Jason Greene
 #
+# Check for yum-utils and install if needed
 rpm -qa | grep -qw yum-utils || yum -y install yum-utils
+# Check for httpd and install if needed
 rpm -qa | grep -qw httpd || yum -y install httpd
 systemctl is-active --quiet httpd || systemctl start httpd
 mkdir -p /var/www/html/repos/{rhel-7-server-rpms,rhel-7-server-extras-rpms,rhel-7-server-optional-rpms,rhel-7-server-supplementary-rpms,epel}
@@ -22,11 +24,13 @@ reposync -g -l -d -m --repoid=epel --newest-only --download-metadata --download_
 echo '========================================================'
 echo 'Creating Repos'
 echo '========================================================'
+# Create repos
 createrepo -g comps.xml /var/www/html/repos/rhel-7-server-rpms
 createrepo -g comps.xml /var/www/html/repos/rhel-7-server-extras-rpms
 createrepo -g comps.xml /var/www/html/repos/rhel-7-server-optional-rpms
 createrepo -g comps.xml /var/www/html/repos/rhel-7-server-supplementary-rpms
 createrepo -g comps.xml /var/www/html/repos/epel
+# allow httpd through firewall
+firewall-cmd --zone=public --add-service=http
 echo '========================================================'
 echo 'Done'
-ls /var/www/html/repos
