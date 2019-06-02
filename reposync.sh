@@ -31,6 +31,6 @@ createrepo -g comps.xml /var/www/html/repos/rhel-7-server-optional-rpms
 createrepo -g comps.xml /var/www/html/repos/rhel-7-server-supplementary-rpms
 createrepo -g comps.xml /var/www/html/repos/epel
 # allow httpd through firewall
-firewall-cmd --zone=public --add-service=http
+firewall-cmd --permanent --add-service=http
 echo '========================================================'
 echo 'Done'
