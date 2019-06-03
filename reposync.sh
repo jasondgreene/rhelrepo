@@ -1,7 +1,9 @@
 #!/bin/bash
-# Ugly script to create repos for RHEL7
-# Jason Greene
-#
+# Script to create local repos for RHEL7
+# By:Jason Greene
+# Uncomment the next line if setting up for the first time
+# subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms --enable=rhel-7-supplementary-rpms
+# subscription-manager register --auto-attach --release=7.6 --force #if you need to set release version uncomment
 # Check for yum-utils and install if needed
 rpm -qa | grep -qw yum-utils || yum -y install yum-utils
 # Check for httpd and install if needed
